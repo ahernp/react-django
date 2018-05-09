@@ -1,0 +1,20 @@
+# Server-specific passwords etc.
+secrets
+
+# Generated
+/react/build
+/django/media
+/django/static
+/react/node_modules
+
+# Python bytecode:
+*.py[co]
+
+# Packaging files:
+*.egg*
+
+# Sphinx docs:
+_build
+
+# Testing
+.pytest_cache

@@ -1,0 +1,7 @@
+#feedreader-entry-counts {
+    width:20%;
+    float:left;
+}
+.selected {
+    text-decoration: underline;
+}
