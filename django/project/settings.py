@@ -2,7 +2,7 @@ import os
 import json
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = '/opt/ahernp/'
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
@@ -39,6 +39,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,6 +86,7 @@ STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.normpath(os.path.join(BASE_DIR, 'site_assets')),
+    os.path.normpath(os.path.join(BASE_DIR, 'build/static')),
 ]
 
 MEDIA_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'media'))
