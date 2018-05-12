@@ -27,7 +27,6 @@ services:
       context: ./react
       dockerfile: Dockerfile
     image: react:ahernp
-    command: npm start
     volumes:
       - ./react:/app
     ports:

@@ -4,7 +4,7 @@
   "private": true,
   "proxy": {
     "/api/": {
-      "target": "http://webapp:80/"
+      "target": "http://nginx:80/"
     }
   },
   "dependencies": {
