@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from core.models import Log
 from feedreader.models import Group, Feed, Entry
-from pages.models import Page,CONTENT_TYPE_CHOICES
+from pages.models import Page, CONTENT_TYPE_CHOICES
 
 from .serializers import GroupSerializer, FeedSerializer, EntrySerializer, LogSerializer, PageSerializer
 
@@ -26,6 +26,7 @@ class EntryViewSet(viewsets.ModelViewSet):
             entry.save()
             return Response({}, status=status.HTTP_200_OK)
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FeedViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

@@ -9,12 +9,14 @@ DB_NAME = env_variables.get('AHERNP_DATABASE_NAME')
 DB_USER = env_variables.get('AHERNP_DATABASE_USER')
 DB_PASSWORD = env_variables.get('AHERNP_DATABASE_PASSWORD')
 
+
 def run(command):
     try:
         print(command)
         subprocess.call(command, shell=True)
     except OSError as e:
         print('{command} {e}'.format(command=command, e=e))
+
 
 def setup_postgres():
     sql_execute = 'sudo docker-compose exec db psql -U postgres -c "{command}"'
@@ -30,18 +32,20 @@ def setup_postgres():
     for command in commands:
         run(sql_execute.format(command=command))
 
+
 def setup_webapp():
     execute = 'sudo docker-compose exec webapp python manage.py {command}'
     commands = [
-        # 'migrate',
-        # 'loaddata project/fixtures/live_snapshot.json',
-        # 'poll_feeds --verbose',
-        # 'createsuperuser',
+        'migrate',
+        'loaddata project/fixtures/live_snapshot.json',
+        'poll_feeds --verbose',
+        'createsuperuser',
         'collectstatic',
     ]
     for command in commands:
         run(execute.format(command=command))
 
+
 if __name__ == '__main__':
-    #setup_postgres()
+    setup_postgres()
     setup_webapp()

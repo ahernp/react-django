@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
@@ -23,6 +22,7 @@ def do_login(request):
         return HttpResponse('')
     else:
         raise PermissionDenied
+
 
 def do_logout(request):
     logout(request)

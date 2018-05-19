@@ -151,7 +151,6 @@ def poll_feed(feed_from_database, verbose=False):
                 update_entry_on_database(entry_on_database, entry_from_xml)
                 number_created += 1
 
-
         if verbose:
             print('%d new entries found on %s' % (number_created,
                                                   updated_feed.title))

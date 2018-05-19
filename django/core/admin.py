@@ -19,8 +19,6 @@ class LogAdmin(admin.ModelAdmin):
         }),
     )
 
-admin.site.register(Log, LogAdmin)
-
 
 class LogEntryAdmin(admin.ModelAdmin):
     date_hierarchy = 'action_time'
@@ -65,4 +63,6 @@ class LogEntryAdmin(admin.ModelAdmin):
 
     action_description.short_description = 'Action'
 
+
+admin.site.register(Log, LogAdmin)
 admin.site.register(LogEntry, LogEntryAdmin)

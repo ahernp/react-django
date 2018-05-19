@@ -28,4 +28,5 @@ class PageAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(attrs={'rows': 25, 'cols': 110})},
     }
 
+
 admin.site.register(Page, PageAdmin)

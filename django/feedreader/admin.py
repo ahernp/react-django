@@ -6,8 +6,6 @@ from .models import Group, Feed, Entry
 class GroupAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Group, GroupAdmin)
-
 
 class FeedAdmin(admin.ModelAdmin):
     list_display = ['xml_url', 'title', 'group', 'published_time', 'last_polled_time']
@@ -25,8 +23,6 @@ class FeedAdmin(admin.ModelAdmin):
         }),
     )
 
-admin.site.register(Feed, FeedAdmin)
-
 
 class EntryAdmin(admin.ModelAdmin):
     list_display = ['title', 'feed', 'published_time']
@@ -43,4 +39,7 @@ class EntryAdmin(admin.ModelAdmin):
         }),
     )
 
+
+admin.site.register(Group, GroupAdmin)
+admin.site.register(Feed, FeedAdmin)
 admin.site.register(Entry, EntryAdmin)

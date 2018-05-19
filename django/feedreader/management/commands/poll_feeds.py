@@ -37,7 +37,6 @@ class Command(BaseCommand):
         num_feeds = len(feeds)
         oldest_entry_timestamp = timezone.now() - TIME_TO_KEEP_ENTRIES
 
-
         if verbose:
             print('%d feeds to process' % (num_feeds))
 
@@ -48,7 +47,7 @@ class Command(BaseCommand):
             poll_feed(feed, verbose)
 
             # Remove older entries
-            entries = Entry.objects.filter(feed=feed,published_time__lt=oldest_entry_timestamp)
+            entries = Entry.objects.filter(feed=feed, published_time__lt=oldest_entry_timestamp)
 
             for entry in entries:
                 entry.delete()
