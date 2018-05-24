@@ -21,7 +21,11 @@ AHERNP_DATABASE_PASSWORD=
 POSTGRES_PASSWORD=
 ```
 
-then run `sudo docker-compose up` followed by `python3 setup_app.py`
+then run:
+
+1. `sudo docker-compose up`
+2. `sudo docker-compose exec react npm run build`
+3. `python3 setup_app.py`
 
 ### Usage
 
