@@ -6,14 +6,14 @@ import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/configureStore';
 
 import App from './App';
-import { fetchAllPages } from './actions/pageActions';
-import { fetchAllFeedreaderData } from './actions/feedreaderActions';
+import { fetchAllPagesAction } from './actions/pageActions';
+import { fetchAllFeedreaderDataAction } from './actions/feedreaderActions';
 import './index.css';
 
 const store = configureStore();
 
-store.dispatch(fetchAllPages());
-store.dispatch(fetchAllFeedreaderData());
+store.dispatch(fetchAllPagesAction());
+store.dispatch(fetchAllFeedreaderDataAction());
 
 render(
     <Provider store={store}>

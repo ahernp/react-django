@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ACTION_TYPES, API_URL_ALL_PAGES } from '../constants';
 
-export const fetchAllPages = () => {
+export const fetchAllPagesAction = () => {
     return async (dispatch) => {
         try {
             dispatch({type: ACTION_TYPES.ALL_PAGES_FETCH});

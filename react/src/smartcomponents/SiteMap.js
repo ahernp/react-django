@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux';
 
-import { fetchAllPages } from '../actions/pageActions';
+import { fetchAllPagesAction } from '../actions/pageActions';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -14,7 +14,7 @@ import { DYNAMIC_PAGES, SITE_MAP } from '../constants'
 
 class SiteMap extends React.Component {
     componentWillMount() {
-        this.props.fetchAllPages();
+        this.props.fetchAllPagesAction();
     }
 
     render() {
@@ -59,18 +59,18 @@ class SiteMap extends React.Component {
 
 SiteMap.propTypes = {
   pages: PropTypes.array.isRequired,
-  fetchAllPages: PropTypes.func.isRequired
+  fetchAllPagesAction: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    pages: state.pages
+    pages: state.pagesReducer
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        fetchAllPages: fetchAllPages,
+        fetchAllPagesAction: fetchAllPagesAction,
     }, dispatch);
 };
 

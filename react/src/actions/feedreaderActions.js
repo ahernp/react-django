@@ -11,7 +11,7 @@ async function fetchFeedreaderData(url) {
     return response.data;
 }
 
-export const fetchAllFeedreaderData = () => {
+export const fetchAllFeedreaderDataAction = () => {
     return async (dispatch) => {
         try {
             dispatch({type: ACTION_TYPES.FEEDREADER_DATA_FETCH});
