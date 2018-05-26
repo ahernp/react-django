@@ -94,9 +94,9 @@ Page.propTypes = {
 
 function mapStateToProps(state, props) {
     const slug = props.match.params.slug;
-    const page = state.pages.find(page => page.slug === slug);
+    const page = state.pagesReducer.find(page => page.slug === slug);
     return {
-        pages: state.pages,
+        pages: state.pagesReducer,
         page
     };
 }

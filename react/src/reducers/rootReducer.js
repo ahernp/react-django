@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import feedreader from './feedreaderReducer';
-import pages from './pagesReducer';
+import feedreaderReducer from './feedreaderReducer';
+import pagesReducer from './pagesReducer';
 
 const rootReducer = combineReducers({
-  feedreader,
-  pages
+  feedreaderReducer,
+  pagesReducer
 });
 
 export default rootReducer;

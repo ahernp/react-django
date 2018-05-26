@@ -7,11 +7,13 @@ import configureStore from './store/configureStore';
 
 import App from './App';
 import { fetchAllPages } from './actions/pageActions';
+import { fetchAllFeedreaderData } from './actions/feedreaderActions';
 import './index.css';
 
 const store = configureStore();
 
 store.dispatch(fetchAllPages());
+store.dispatch(fetchAllFeedreaderData());
 
 render(
     <Provider store={store}>

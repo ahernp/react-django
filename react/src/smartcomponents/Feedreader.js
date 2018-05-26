@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import './Feedreader.css';
 
 import FeedreaderCounts from '../components/FeedreaderCounts';
@@ -7,53 +8,32 @@ import FeedreaderEntry from '../components/FeedreaderEntry';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-import FeedreaderStore from '../stores/FeedreaderStore'
+import { ADMIN_URL, FEEDREADER_PAGE } from '../constants'
 
-import { FEEDREADER_PAGE } from '../constants'
-
-export default class Feedreader extends React.Component {
+class Feedreader extends React.Component {
     constructor() {
         super();
-        this.populateFeeds = this.populateFeeds.bind(this);
-        const entries = FeedreaderStore.getAllEntries();
-        const feeds = FeedreaderStore.getAllFeeds();
-        const groups = FeedreaderStore.getAllGroups();
         this.toggleShowUnreadEntries = this.toggleShowUnreadEntries.bind(this);
         this.setFilterFeedId = this.setFilterFeedId.bind(this);
-        this.state = { showUnreadEntries: true, filterFeedId: undefined, entries, feeds, groups };
+        this.state = { showUnreadEntries: true, filterFeedId: undefined };
     }
 
     componentDidUpdate() {
         window.scrollTo(0, 0);
     }
 
-    componentWillMount() {
-        FeedreaderStore.on('change', this.populateFeeds);
-    }
-
-    populateFeeds() {
-        const entries = FeedreaderStore.getAllEntries();
-        const feeds = FeedreaderStore.getAllFeeds();
-        const groups = FeedreaderStore.getAllGroups();
-        const showUnreadEntries = entries.some(entry => !entry.read_flag);
-        this.setState({ ...this.state, showUnreadEntries, entries, feeds, groups });
-    }
-
-    componentWillUnmount() {
-        FeedreaderStore.removeListener('change', this.populateFeeds);
-    }
-
     setFilterFeedId(feedId) {
-        return () => this.setState({ ...this.state, filterFeedId: feedId });
+        return () => this.setState({filterFeedId: feedId});
     }
 
     toggleShowUnreadEntries() {
         const showUnreadEntries = !this.state.showUnreadEntries;
-        this.setState({ ...this.state, showUnreadEntries });
+        this.setState({showUnreadEntries});
     }
 
     render() {
-        const { showUnreadEntries, filterFeedId, entries, feeds, groups } = this.state;
+        const { showUnreadEntries, filterFeedId } = this.state;
+        const { groups, feeds, entries } = this.props;
 
         const shownEntries = showUnreadEntries ? entries.filter(entry => !entry.read_flag) : entries;
 
@@ -62,10 +42,6 @@ export default class Feedreader extends React.Component {
         let entryList = filteredEntries.map(entry => (<FeedreaderEntry key={entry.id} entry={entry}></FeedreaderEntry>));
 
         const feedreaderCountsProps = { showUnreadEntries, filterFeedId, entries, feeds, groups, setFilterFeedId: this.setFilterFeedId };
-
-        const footerProps = {
-            controls: [{label: 'Unread', func: this.toggleShowUnreadEntries}]
-        };
 
         return (
             <React.Fragment>
@@ -78,8 +54,31 @@ export default class Feedreader extends React.Component {
                     </div>
                     <div style={{clear:'both'}}></div>
                 </div>
-                <Footer { ...footerProps } />
+                <Footer>
+                    Dynamic content{' '}
+                    <a key="admin-link" href={ADMIN_URL + '/feedreader'}>Admin</a>{' '}
+                    <span className="ap-control" onClick={this.toggleShowUnreadEntries}>Unread</span>
+                </Footer>
             </React.Fragment>
         )
     }
 }
+
+Feedreader.propTypes = {
+  groups: PropTypes.array.isRequired,
+  feeds: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state) {
+    return {
+        groups: state.feedreaderReducer.groups,
+        feeds: state.feedreaderReducer.feeds,
+        entries: state.feedreaderReducer.entries
+    };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Feedreader);

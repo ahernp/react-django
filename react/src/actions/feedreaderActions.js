@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-import dispatcher from '../dispatcher';
-
-import { ACTION_TYPES, API_URL_ALL_ENTRIES, API_URL_ALL_FEEDS, API_URL_ALL_GROUPS, API_URL_ENTRY } from '../constants';
+import { ACTION_TYPES, API_URL_ALL_ENTRIES, API_URL_ALL_FEEDS,
+    API_URL_ALL_GROUPS, API_URL_ENTRY } from '../constants';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -12,37 +11,33 @@ async function fetchFeedreaderData(url) {
     return response.data;
 }
 
-export async function fetchAllFeedreaderData() {
-    try {
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_DATA_FETCH});
+export const fetchAllFeedreaderData = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTION_TYPES.FEEDREADER_DATA_FETCH});
 
-        const groups = fetchFeedreaderData(API_URL_ALL_GROUPS);
-        const feeds = fetchFeedreaderData(API_URL_ALL_FEEDS);
-        const entries = fetchFeedreaderData(API_URL_ALL_ENTRIES);
+            const groups = await fetchFeedreaderData(API_URL_ALL_GROUPS);
+            const feeds = await fetchFeedreaderData(API_URL_ALL_FEEDS);
+            const entries = await fetchFeedreaderData(API_URL_ALL_ENTRIES);
 
-        const feedreaderData = {
-            groups: await groups,
-            feeds: await feeds,
-            entries: await entries
-        };
-
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_DATA_RECEIVED, feedreaderData});
-    } catch(error) {
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_FETCH_ERROR, error: error});
-        console.log('error in fetchAllFeedreaderData', error)
+            dispatch({type: ACTION_TYPES.FEEDREADER_DATA_RECEIVED, groups, feeds, entries});
+        } catch(error) {
+            dispatch({type: ACTION_TYPES.FEEDREADER_FETCH_ERROR, error});
+        }
     }
 }
 
-export async function toggleEntryReadAction(entryId) {
-    try {
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ});
-        await axios.post(
-            API_URL_ENTRY + entryId + '/',
-            {'read_flag': 'toggle'}
-        );
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ_DONE, entryId});
-    } catch(error) {
-        dispatcher.dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ_ERROR, error: error});
-        console.log('error in toggleEntryRead', error)
+export const toggleEntryReadAction = (entryId) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ});
+            await axios.post(
+                API_URL_ENTRY + entryId + '/',
+                {'read_flag': 'toggle'}
+            );
+            dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ_DONE, entryId});
+        } catch(error) {
+            dispatch({type: ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ_ERROR, error: error});
+        }
     }
 }

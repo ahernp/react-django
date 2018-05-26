@@ -11,7 +11,6 @@ export const fetchAllPages = () => {
             dispatch({type: ACTION_TYPES.ALL_PAGES_RECEIVED, pages});
         } catch(error) {
             dispatch({type: ACTION_TYPES.ALL_PAGES_ERROR, error: error});
-            console.log('error in fetchAllPages', error)
         }
     }
 }
