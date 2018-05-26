@@ -1,52 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import marked from 'marked';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FormatDate from '../components/FormatDate';
 
-import PageStore from '../stores/PageStore'
-
 import { ADMIN_URL } from '../constants'
 
-export default class Page extends React.Component {
-    constructor() {
-        super();
-        this.populatePage = this.populatePage.bind(this);
+class Page extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { showSource: false };
         this.toggleSource = this.toggleSource.bind(this);
-        this.state = { slug: null, showSource: false };
     }
 
     componentDidUpdate() {
         window.scrollTo(0, 0);
     }
 
-    componentWillMount() {
-        const { slug } = this.props.match.params;
-        this.setState({ ...this.state, slug });
-        PageStore.on('change', this.populatePage);
-    }
-
-    populatePage() {
-        const { slug } = this.props.match.params;
-        this.setState({ ...this.state, slug });
-    }
-
-    componentWillUnmount() {
-        PageStore.removeListener('change', this.populatePage);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.slug !== nextProps.match.params.slug) {
-            const { slug } = nextProps.match.params;
-            this.setState({ ...this.state, slug });
-        }
-    }
-
     getMarkdownText(markdown) {
-        const rawMarkup = marked(markdown);
+        const rawMarkup = markdown ? marked(markdown): '';
         return {__html: rawMarkup};
     }
 
@@ -56,8 +32,7 @@ export default class Page extends React.Component {
     }
 
     render() {
-        const { slug } = this.state;
-        const page = PageStore.getPageBySlug(slug);
+        const page = this.props.page;
 
         if (!page) {
             return (
@@ -72,10 +47,10 @@ export default class Page extends React.Component {
             );
         }
 
-        const generateChildLinks = (page) => {
+        const generateChildLinks = (currentPage) => {
             let childLinks = [];
             if (page.id) {
-                const children = PageStore.getChildPages(page.id);
+                const children = this.props.pages.filter(page => page.parent_id === currentPage.id);
                 if (children.length) {
                     childLinks = children.map(page =>
                         <Link key={page.id} to={'/pages/' + page.slug}>{page.title}</Link>
@@ -92,15 +67,6 @@ export default class Page extends React.Component {
                         <pre>{page.content}</pre>
                     </div>;
 
-        const footerProps = {
-            label: <span>Updated <FormatDate dateString={page.updated}/></span>,
-            links: [
-                (<React.Fragment><a href={ADMIN_URL + '/pages/page/' + page.id}>Admin</a>{' '}</React.Fragment>),
-                (<Link to="/pages/markdown">Markdown</Link>)
-            ],
-            controls: [{label: 'Source', func: this.toggleSource}]
-        };
-
         return (
             <React.Fragment>
                 <Header page={page} />
@@ -110,8 +76,32 @@ export default class Page extends React.Component {
                     <div dangerouslySetInnerHTML={this.getMarkdownText(page.content)}></div>
                     {this.state.showSource && source}
                 </div>
-                <Footer {...footerProps} />
+                <Footer>
+                    <span>Updated <FormatDate dateString={page.updated}/></span>{' '}
+                    <a href={ADMIN_URL + '/pages/page/' + page.id}>Admin</a>{' '}
+                    <Link to="/pages/markdown">Markdown</Link>{' '}
+                    <span className="ap-control" onClick={this.toggleSource}>Source</span>
+                </Footer>
             </React.Fragment>
         )
     }
 }
+
+Page.propTypes = {
+  page: PropTypes.object,
+  pages: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, props) {
+    const slug = props.match.params.slug;
+    const page = state.pages.find(page => page.slug === slug);
+    return {
+        pages: state.pages,
+        page
+    };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Page);

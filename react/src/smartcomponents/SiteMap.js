@@ -2,14 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from 'redux';
 
 import { fetchAllPages } from '../actions/pageActions';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import FormatDate from '../components/FormatDate';
-import PageStore from '../stores/PageStore'
 
 import { DYNAMIC_PAGES, SITE_MAP } from '../constants'
 
@@ -26,7 +25,7 @@ class SiteMap extends React.Component {
             const searchArray = search.slice(1).split('=');
             if (searchArray[0] === 'parent_id') {
                 const value = parseInt(searchArray[1], 10);
-                pages = PageStore.getChildPages(value)
+                pages = this.props.pages.filter(page => page.parent_id === value);
             }
         }
 
