@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 
 import dispatcher from '../dispatcher';
 
-import { ACTIONS } from '../constants';
+import { ACTION_TYPES } from '../constants';
 
 class FeedreaderStore extends EventEmitter {
     constructor() {
@@ -26,11 +26,11 @@ class FeedreaderStore extends EventEmitter {
 
     handleActions(action) {
         switch(action.type) {
-            case ACTIONS.FEEDREADER_DATA_RECEIVED: {
+            case ACTION_TYPES.FEEDREADER_DATA_RECEIVED: {
                 this.setData(action.feedreaderData);
                 break;
             }
-            case ACTIONS.FEEDREADER_TOGGLE_ENTRY_READ_DONE: {
+            case ACTION_TYPES.FEEDREADER_TOGGLE_ENTRY_READ_DONE: {
                 this.toggleEntryRead(action.entryId);
                 break;
             }

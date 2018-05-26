@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { fetchAllFeedreaderData } from './actions/FeedreaderActions';
-import { fetchAllPages } from './actions/PageActions';
+import { fetchAllFeedreaderData } from './actions/feedreaderActions';
+import { fetchAllPages } from './actions/pageActions';
 
 import Homepage from './smartcomponents/Homepage';
 import Dashboard from './smartcomponents/Dashboard';

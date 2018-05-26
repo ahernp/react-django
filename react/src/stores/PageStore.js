@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 
 import dispatcher from '../dispatcher';
 
-import { ACTIONS, PAGE_PARENT_ATTRIBUTE } from '../constants';
+import { ACTION_TYPES, PAGE_PARENT_ATTRIBUTE } from '../constants';
 
 class PageStore extends EventEmitter {
     constructor() {
@@ -24,7 +24,7 @@ class PageStore extends EventEmitter {
 
     handleActions(action) {
         switch(action.type) {
-            case ACTIONS.ALL_PAGES_RECEIVED: {
+            case ACTION_TYPES.ALL_PAGES_RECEIVED: {
                 this.setPages(action.pages);
                 break;
             }
@@ -44,4 +44,3 @@ const pageStore = new PageStore();
 dispatcher.register(pageStore.handleActions.bind(pageStore));
 
 export default pageStore;
-

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { toggleEntryReadAction } from '../actions/FeedreaderActions';
+import { toggleEntryReadAction } from '../actions/feedreaderActions';
 
 import FormatDate from '../components/FormatDate';
 

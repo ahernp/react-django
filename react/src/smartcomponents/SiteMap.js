@@ -1,5 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { bindActionCreators } from "redux";
+
+import { fetchAllPages } from '../actions/pageActions';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -8,28 +13,13 @@ import PageStore from '../stores/PageStore'
 
 import { DYNAMIC_PAGES, SITE_MAP } from '../constants'
 
-export default class Pages extends React.Component {
-    constructor() {
-        super();
-        this.getAllPages = this.getAllPages.bind(this);
-        this.state = { pages: [] };
-    }
-
+class SiteMap extends React.Component {
     componentWillMount() {
-        this.getAllPages();
-        PageStore.on('change', this.getAllPages);
-    }
-
-    componentWillUnmount() {
-        PageStore.removeListener('change', this.getAllPages);
-    }
-
-    getAllPages() {
-        this.setState({ pages: PageStore.getAllPages() });
+        this.props.fetchAllPages();
     }
 
     render() {
-        let { pages } = this.state;
+        let { pages } = this.props;
         const search = this.props.location.search;
 
         if (search) {
@@ -67,3 +57,25 @@ export default class Pages extends React.Component {
         );
     }
 }
+
+SiteMap.propTypes = {
+  pages: PropTypes.array.isRequired,
+  fetchAllPages: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    pages: state.pages
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        fetchAllPages: fetchAllPages,
+    }, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiteMap);
