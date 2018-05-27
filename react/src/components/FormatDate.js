@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 export default class FormatDate extends React.Component {
     render() {
@@ -13,3 +14,7 @@ export default class FormatDate extends React.Component {
             return '';
     }
 }
+
+FormatDate.propTypes = {
+  dateString: PropTypes.string.isRequired
+};

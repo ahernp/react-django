@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react';
 
 import './FeedreaderCounts.css';
@@ -18,8 +19,9 @@ function countEntries(groups, feeds, entries) {
     }
 
     for (let feed of feeds) {
-        if (feed.group_id)
+        if (feed.group_id !== undefined) {
             groupCounts[feed.group_id].count += feedCounts[feed.id].count;
+        }
     }
 
     return { groupCounts, feedCounts }
@@ -35,7 +37,6 @@ export default class FeedreaderCounts extends React.Component {
             groups,
             feeds,
             showUnreadEntries ? unreadEntries : entries);
-
         const groupList = groups.map(group => {
             const entryList = feeds.filter(feed => feed.group_id === group.id && feedCounts[feed.id].count > 0)
                 .map(feed => (
@@ -61,3 +62,12 @@ export default class FeedreaderCounts extends React.Component {
         );
     }
 }
+
+FeedreaderCounts.propTypes = {
+  setFilterFeedId: PropTypes.func.isRequired,
+  filterFeedId: PropTypes.number,
+  showUnreadEntries: PropTypes.bool.isRequired,
+  groups: PropTypes.array.isRequired,
+  feeds: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired
+};
