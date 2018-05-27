@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  id="footer"
+>
+  <p>
+    <React.Fragment>
+      Dynamic Content 
+      <a
+        href="/admin/"
+        key="admin-link"
+      >
+        Admin
+      </a>
+    </React.Fragment>
+  </p>
+</div>
+`;
+
+exports[`renders its children 1`] = `
+<div
+  id="footer"
+>
+  <p>
+    Hello Mum
+  </p>
+</div>
+`;
