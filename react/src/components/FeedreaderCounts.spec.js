@@ -10,7 +10,7 @@ const ENTRIES = [
 ];
 
 it('renders correctly, count all', () => {
-    const wrapper = render(
+    const wrapper = shallow(
         <FeedreaderCounts
             setFilterFeedId={() => {}}
             filterFeedId={undefined}
@@ -25,7 +25,7 @@ it('renders correctly, count all', () => {
 });
 
 it('renders correctly, count unread', () => {
-    const wrapper = render(
+    const wrapper = shallow(
         <FeedreaderCounts
             setFilterFeedId={() => {}}
             filterFeedId={undefined}

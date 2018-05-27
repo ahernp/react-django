@@ -5,29 +5,50 @@ exports[`renders correctly, count all 1`] = `
   id="feedreader-entry-counts"
 >
   <h2>
-    All (4)
+    All 
+    (4)
   </h2>
   <div>
-    <h3>
-      Group One (2)
-    </h3>
-    <div>
-      <p
-        class=""
-      >
-        Feed One (2)
-      </p>
-    </div>
-    <h3>
-      Group Two (2)
-    </h3>
-    <div>
-      <p
-        class=""
-      >
-        Feed Two (2)
-      </p>
-    </div>
+    <React.Fragment
+      key="0"
+    >
+      <h3>
+        Group One
+         
+        (2)
+      </h3>
+      <div>
+        <p
+          className=""
+          key="0"
+        >
+          Feed One
+           (
+          2
+          )
+        </p>
+      </div>
+    </React.Fragment>
+    <React.Fragment
+      key="1"
+    >
+      <h3>
+        Group Two
+         
+        (2)
+      </h3>
+      <div>
+        <p
+          className=""
+          key="1"
+        >
+          Feed Two
+           (
+          2
+          )
+        </p>
+      </div>
+    </React.Fragment>
   </div>
 </div>
 `;
@@ -37,25 +58,39 @@ exports[`renders correctly, count unread 1`] = `
   id="feedreader-entry-counts"
 >
   <h2>
-    All (2)
+    All 
+    (2)
   </h2>
   <div>
-    <h3>
-      Group One (2)
-    </h3>
-    <div>
-      <p
-        class=""
-      >
-        Feed One (2)
-      </p>
-    </div>
-    <h3>
-      Group Two 
-    </h3>
-    <div>
-      
-    </div>
+    <React.Fragment
+      key="0"
+    >
+      <h3>
+        Group One
+         
+        (2)
+      </h3>
+      <div>
+        <p
+          className=""
+          key="0"
+        >
+          Feed One
+           (
+          2
+          )
+        </p>
+      </div>
+    </React.Fragment>
+    <React.Fragment
+      key="1"
+    >
+      <h3>
+        Group Two
+         
+      </h3>
+      <div />
+    </React.Fragment>
   </div>
 </div>
 `;
