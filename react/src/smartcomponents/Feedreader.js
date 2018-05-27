@@ -56,7 +56,7 @@ class Feedreader extends React.Component {
                 </div>
                 <Footer>
                     Dynamic content{' '}
-                    <a key="admin-link" href={ADMIN_URL + '/feedreader'}>Admin</a>{' '}
+                    <a key="admin-link" href={ADMIN_URL + 'feedreader'}>Admin</a>{' '}
                     <span className="ap-control" onClick={this.toggleShowUnreadEntries}>Unread</span>
                 </Footer>
             </React.Fragment>

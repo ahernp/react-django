@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
 import { toggleEntryReadAction } from '../actions/feedreaderActions';
 
@@ -6,14 +9,14 @@ import FormatDate from '../components/FormatDate';
 
 import './FeedreaderEntry.css';
 
-export default class FeedreaderEntry extends React.Component {
+class FeedreaderEntry extends React.Component {
     constructor(props) {
         super(props);
         this.toggleEntryRead = this.toggleEntryRead.bind(this);
     }
 
     toggleEntryRead(entryId) {
-        return () => toggleEntryReadAction(entryId);
+        return () => this.props.toggleEntryReadAction(entryId);
     }
 
     render() {
@@ -30,3 +33,18 @@ export default class FeedreaderEntry extends React.Component {
         );
     }
 }
+
+FeedreaderEntry.propTypes = {
+  entry: PropTypes.object.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        toggleEntryReadAction: toggleEntryReadAction,
+    }, dispatch);
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(FeedreaderEntry);
