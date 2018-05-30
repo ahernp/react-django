@@ -8,26 +8,26 @@ def check_logged_in(request):
     if not request.user.is_authenticated:
         raise PermissionDenied
 
-    return HttpResponse('')
+    return HttpResponse("")
 
 
 def do_login(request):
-    username = request.POST.get(u'username')
-    password = request.POST.get(u'password')
+    username = request.POST.get(u"username")
+    password = request.POST.get(u"password")
 
     user = authenticate(username=username, password=password)
 
     if user is not None:
         login(request, user)
-        return HttpResponse('')
+        return HttpResponse("")
     else:
         raise PermissionDenied
 
 
 def do_logout(request):
     logout(request)
-    return HttpResponse('')
+    return HttpResponse("")
 
 
 class HomePageView(TemplateView):
-    template_name = 'index.html'
+    template_name = "index.html"

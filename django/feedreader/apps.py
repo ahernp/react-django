@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class FeedreaderConfig(AppConfig):
-    name = 'feedreader'
+    name = "feedreader"

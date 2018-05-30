@@ -7,5 +7,5 @@ export default function pagesReducer(state = initialState.pages, action) {
             return action.pages;
         default:
             return state;
-}
+    }
 }

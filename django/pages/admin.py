@@ -6,26 +6,30 @@ from .models import Page
 
 
 class PageAdmin(admin.ModelAdmin):
-    search_fields = ['title']
-    list_display = ['title', 'parent', 'updated']
-    list_editable = ['parent']
-    list_filter = ['content_type']
-    prepopulated_fields = {'slug': ('title',)}
-    readonly_fields = ['updated']
-    ordering = ['parent', 'title']
+    search_fields = ["title"]
+    list_display = ["title", "parent", "updated"]
+    list_editable = ["parent"]
+    list_filter = ["content_type"]
+    prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = ["updated"]
+    ordering = ["parent", "title"]
     save_on_top = True
     fieldsets = (
-        (None, {
-            'fields': (('content',),
-                       ('title', 'parent',),
-                       ('slug', 'content_type'),
-                       ('updated', 'published'),
-                       )
-        }),
+        (
+            None,
+            {
+                "fields": (
+                    ("content",),
+                    ("title", "parent"),
+                    ("slug", "content_type"),
+                    ("updated", "published"),
+                )
+            },
+        ),
     )
     formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': 60})},
-        models.TextField: {'widget': Textarea(attrs={'rows': 25, 'cols': 110})},
+        models.CharField: {"widget": TextInput(attrs={"size": 60})},
+        models.TextField: {"widget": Textarea(attrs={"rows": 25, "cols": 110})},
     }
 
 

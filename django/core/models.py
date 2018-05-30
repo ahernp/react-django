@@ -12,10 +12,10 @@ class Log(models.Model):
     datetime = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
-        ordering = ['-datetime']
+        ordering = ["-datetime"]
 
     def __str__(self):
-        return '{level} - {msg}...'.format(level=self.level, msg=self.msg[:20])
+        return "{level} - {msg}...".format(level=self.level, msg=self.msg[:20])
 
     def recent(self):
         now = timezone.now()

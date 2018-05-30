@@ -5,10 +5,11 @@ class Group(models.Model):
     """
     Group of feeds.
     """
+
     name = models.CharField(max_length=250, unique=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -18,6 +19,7 @@ class Feed(models.Model):
     """
     Feed information.
     """
+
     title = models.CharField(max_length=2000, blank=True, null=True)
     xml_url = models.CharField(max_length=255, unique=True)
     link = models.CharField(max_length=2000, blank=True, null=True)
@@ -27,7 +29,7 @@ class Feed(models.Model):
     group = models.ForeignKey(Group, blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
     def __str__(self):
         return self.title or self.xml_url
@@ -39,6 +41,7 @@ class Feed(models.Model):
         except Feed.DoesNotExist:
             super(Feed, self).save(*args, **kwargs)
             from feedreader.utils import poll_feed
+
             poll_feed(self)
 
 
@@ -46,6 +49,7 @@ class Entry(models.Model):
     """
     Feed entry information.
     """
+
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     title = models.CharField(max_length=2000, blank=True, null=True)
     link = models.CharField(max_length=2000)
@@ -54,8 +58,8 @@ class Entry(models.Model):
     read_flag = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-published_time']
-        verbose_name_plural = 'entries'
+        ordering = ["-published_time"]
+        verbose_name_plural = "entries"
 
     def __str__(self):
         return self.title
